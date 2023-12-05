@@ -69,6 +69,9 @@ class SetMap:
         self.custom_map = CustomMap(range_map)
 
     def get_intersections(self, v: Set):
+        # idea - store (range, start_num)
+        # and then only add a new item to the list
+        # when start_num+range overlaps with new items :>
         output_sets = []
         for pair in self.range_map:
             start_set = Set(pair[1], pair[2])
@@ -101,10 +104,6 @@ class SetMap:
             return output_sets
         # return the thing mapped to itself (since this is what it means)
         return [v]
-
-        # idea - store (range, start_num)
-        # and then only add a new item to the list
-        # when start_num+range overlaps with new items :>
 
 
 def parse_input(lines: List[str]) -> Tuple[List[int], Tuple[int]]:
@@ -161,9 +160,9 @@ def part2(lines: List[str]) -> int:
     unique_values = []
     for i in range(0, len(seeds), 2):
         unique_values.append(Set(seeds[i], seeds[i + 1]))
-    print(unique_values)
 
     # pass through all the maps
+    # O(m*nlog(n)) where m is maps and n is seed sets
     for m in maps.values():
         # print(m)
         # print(unique_values)
